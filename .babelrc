@@ -1,0 +1,49 @@
+{
+
+    // 参考链接:
+    // https://juejin.im/post/5d076744f265da1b8b2b5ef4
+    // https://segmentfault.com/a/1190000020237817
+    // https://juejin.im/post/5d0373a95188251e1b5ebb6c#heading-1
+
+    "presets": [
+        [   
+            //  preset-env 只做 ES6 语法编译
+            //  @babel/plugin-transform-runtime 处理需要 polyfill 的ES6 API 
+
+            //  不使用 @babel/preset-env 的 corejs 做 polyfill 处理是因为 @babel/preset-env 会污染全局，
+            //  有可能与某个插件中自定义的 polyfill 冲突
+
+            //  @babel/preset-env 做 polyfill 处理需要安装 core-js@3 ||core-js@２　,对应 key corejs : 2 || 3 
+            "@babel/preset-env", 
+            {
+                //  是否将 ESmodule 转换为其他 模块规范。
+                //  后续 tree shaking 只支持 ESmodel，不做转换
+                "modules": false
+
+                // "corejs": 3
+            }
+        ]
+    ]
+    ,
+    "plugins": [
+        // 疑点，暂时没找到原因
+        // 代码分割动态 import 时需要安装得依赖，但是经过测试 webpack v4.41.2 没有安装此依赖依旧可以使用动态 import
+        // "@babel/plugin-syntax-dynamic-import",
+        
+        [   
+            //  包含 polyfill，通过key corejs : 2 || 3 || false 开启关闭
+            //  corejs 2与3 区别在于 3 实现了实例化的API解析 eg: Array.from()
+            "@babel/plugin-transform-runtime",
+            {
+                "absoluteRuntime": false,
+                "corejs": 3,
+                "helpers": true,
+                "regenerator": true,
+                "useESModules": true
+            }
+        ],
+        //  ?. 操作符
+        "@babel/plugin-proposal-optional-chaining"
+        
+    ]
+}
