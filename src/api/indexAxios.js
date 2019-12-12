@@ -6,6 +6,7 @@ import axios from 'axios'
     根据执行环境环境切换 http 与 https 
 ------------------------------------*/ 
 let protocol;
+let GETURL = 'https://www.ismoon.cn';
 
 try {
     
@@ -45,4 +46,5 @@ export default {
 
         return axios.post(`${protocol}//${GETURL}/contact/detail`,data);
     }
+
 }

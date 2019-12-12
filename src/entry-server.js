@@ -1,4 +1,6 @@
-import { createApp } from './app'
+import { createApp } from './app';
+
+const { app, router, store } = createApp();
 
 export default context => {
     // 因为有可能会是异步路由钩子函数或组件，所以我们将返回一个 Promise，
@@ -20,8 +22,8 @@ export default context => {
             }
 
             Promise.all(matchedComponents.map(component=>{
-                if (Component.asyncData) {
-                    return Component.asyncData({
+                if (component.asyncData) {
+                    return component.asyncData({
                         store,
                         route: router.currentRoute
                     });

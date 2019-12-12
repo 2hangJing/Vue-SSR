@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2019-12-11 15:58:50
  * @LastEditors: monai
- * @LastEditTime: 2019-12-12 11:47:06
+ * @LastEditTime: 2019-12-12 18:04:20
  */
 import Vue              from 'vue';
 import App              from './App.vue';
