@@ -5,18 +5,18 @@ import axios from 'axios'
     浏览器根据当前 URL 切换协议 
     根据执行环境环境切换 http 与 https 
 ------------------------------------*/ 
-let protocol;
-let GETURL = 'https://www.ismoon.cn';
+let protocol = 'http:';
+let GETURL = 'www.ismoon.cn';
 
-try {
+// try {
     
-    !!window && ({ protocol } = window.location)
-} catch (error) {
+//     !!window && ({ protocol } = window.location)
+// } catch (error) {
 
-    /*  SSR 区分本地开发与线上版本
-    ---------------------------*/ 
-    protocol = GETURL.includes("ismoon") ? "https:" : "http:";
-}
+//     /*  SSR 区分本地开发与线上版本
+//     ---------------------------*/ 
+//     protocol = GETURL.includes("ismoon") ? "http:" : "http:";
+// }
 
 
 

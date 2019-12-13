@@ -6,7 +6,7 @@ const VueLoaderPlugin   = require('vue-loader/lib/plugin');
 module.exports= {
     mode: "none",
     output: {
-        publicPath: "./",
+        publicPath: "/",
         path: path.resolve(__dirname, "../dist")
     },
     module: {
@@ -45,25 +45,6 @@ module.exports= {
                 use: [{
                     loader: "babel-loader",
                 }]
-            },{
-                test: /\.scss$/,
-                use:[
-                    {loader: "style-loader", options:{ injectType: 'styleTag' }},
-                    {
-                        loader: "css-loader", 
-                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
-                        options:{ importLoaders: 2 } 
-                    },
-                    //  postcss 需要在 cssloader 之前嗲调用
-                    {loader: "postcss-loader"},
-                    {loader: "sass-loader"},
-                ]
-            },{
-                test: /\.css$/,
-                use:[
-                    {loader: "style-loader",options:{ injectType: 'styleTag' }},
-                    {loader: "css-loader"}
-                ]
             },
         ]
     },

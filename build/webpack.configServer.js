@@ -2,12 +2,14 @@
 const path                  = require('path');
 const merge                 = require('webpack-merge');
 const webpack               = require('webpack');
-const VueSSRServerPlugin    = require('vue-server-renderer/server-plugin')
+const VueSSRServerPlugin    = require('vue-server-renderer/server-plugin');
+const nodeExternals         = require('webpack-node-externals');
+
 
 module.exports= merge(require("./webpack.configBase.js"), {
 
-    // mode: "production",
-    mode: "none",
+    mode: "production",
+    // mode: "none",
 
     //  eval==>通过eval()执行，不能正确显示行数  | cheap==>只显示错误代码行位置 
     //  inline==>source map被记录到打包JS文件中 | module==>可以捕获loader的报错 
@@ -34,6 +36,36 @@ module.exports= merge(require("./webpack.configBase.js"), {
     // 告知 `vue-loader` 输送面向服务器代码(server-oriented code)。
     target: 'node',
 
+    // externals: nodeExternals({
+    //     // 不要外置化 webpack 需要处理的依赖模块。
+    //     // 你可以在这里添加更多的文件类型。例如，未处理 *.vue 原始文件，
+    //     // 你还应该将修改 `global`（例如 polyfill）的依赖模块列入白名单
+    //     whitelist: /\.css$/
+    // }),
+    module: {
+        rules:[
+            {
+                test: /\.scss$/,
+                use:[
+                    {loader: 'vue-style-loader'},
+                    {
+                        loader: "css-loader", 
+                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
+                        options:{ importLoaders: 2 } 
+                    },
+                    //  postcss 需要在 cssloader 之前嗲调用
+                    {loader: "postcss-loader"},
+                    {loader: "sass-loader"},
+                ]
+            },{
+                test: /\.css$/,
+                use:[
+                    {loader: 'vue-style-loader'},
+                    {loader: "css-loader"}
+                ]
+            },
+        ]
+    },
     optimization: {
         //  TerserPlugin 压缩代码
         //  mode: "production" 默认开启

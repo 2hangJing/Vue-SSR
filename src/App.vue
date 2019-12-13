@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id='app'>
         <h2>测试</h2>
         <!-- 路由匹配到的组件将渲染在这里 -->
         <router-view></router-view>
@@ -14,5 +14,5 @@
     }
 </script>
 <style lang='scss'>
-    // @import ;
+    @import './scss/app.scss';
 </style>

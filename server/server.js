@@ -15,7 +15,7 @@ const renderer = createBundleRenderer(serverBundle, {
     runInNewContext: false, // 推荐
     template, // （可选）页面模板
     clientManifest // （可选）客户端构建 manifest
-})
+});
 
 server.get('*', (req, res) => {
 

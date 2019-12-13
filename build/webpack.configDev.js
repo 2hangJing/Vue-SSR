@@ -1,8 +1,7 @@
 //  CommonJS 语法
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const webpackReload = require("../server/server-reload-websocket");
+const path      = require('path');
+const webpack   = require('webpack');
+const merge     = require('webpack-merge');
 
 module.exports= merge( require('./webpack.configBase.js'),{
     mode: "development",

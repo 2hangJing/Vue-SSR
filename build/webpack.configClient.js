@@ -1,13 +1,15 @@
 //  CommonJS 语法
-const path               = require('path');
-const merge              = require('webpack-merge');
-const webpack            = require('webpack');
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
+const path                      = require('path');
+const merge                     = require('webpack-merge');
+const webpack                   = require('webpack');
+const VueSSRClientPlugin        = require('vue-server-renderer/client-plugin');
+//  清空打包文件夹插件
+const { CleanWebpackPlugin }    = require("clean-webpack-plugin");
 
 module.exports= merge(require("./webpack.configBase.js"), {
 
-    // mode: "production",
-    mode: "none",
+    mode: "production",
+    // mode: "none",
 
     //  eval==>通过eval()执行，不能正确显示行数  | cheap==>只显示错误代码行位置 
     //  inline==>source map被记录到打包JS文件中 | module==>可以捕获loader的报错 
@@ -28,6 +30,28 @@ module.exports= merge(require("./webpack.configBase.js"), {
         chunkFilename: 'chunk.[name].[contenthash].js',
     },
     module: {
+        rules:[
+            {
+                test: /\.scss$/,
+                use:[
+                    {loader: "style-loader", options:{ injectType: 'styleTag' }},
+                    {
+                        loader: "css-loader", 
+                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
+                        options:{ importLoaders: 2 } 
+                    },
+                    //  postcss 需要在 cssloader 之前嗲调用
+                    {loader: "postcss-loader"},
+                    {loader: "sass-loader"},
+                ]
+            },{
+                test: /\.css$/,
+                use:[
+                    {loader: "style-loader",options:{ injectType: 'styleTag' }},
+                    {loader: "css-loader"}
+                ]
+            },
+        ]
     },
     optimization: {
         //  TerserPlugin 压缩代码
@@ -49,7 +73,7 @@ module.exports= merge(require("./webpack.configBase.js"), {
             chunks: "all",
 
             //  大于 30KB 得代码才会进行代码分割
-            minSize: 5000 * 1000,
+            minSize: 30 * 1000,
 
             //  对代码分割后大于 maxSize 得chunk 再次进行代码分割，一般不用配置，默认0
             maxSize: 0,
@@ -99,6 +123,10 @@ module.exports= merge(require("./webpack.configBase.js"), {
         }
     },
     plugins: [
+        new CleanWebpackPlugin({
+            //  删除日志写入控制台
+            verbose: true
+        }),
         // 此插件在输出目录中
         // 生成 `vue-ssr-client-manifest.json`。
         new VueSSRClientPlugin()
