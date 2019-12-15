@@ -1,6 +1,7 @@
 <template>
     <div>
         <h2>HOME</h2>
+        <img src="../static/images/testImg (1).jpg" alt="">
     </div>
 </template>
 <script>

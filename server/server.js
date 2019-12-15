@@ -1,15 +1,14 @@
 
 const fs                        = require("fs");
 const path                      = require('path');
-const Vue                       = require('vue');
 const server                    = require('express')();
 const { createBundleRenderer }  = require('vue-server-renderer');
 
-const serverBundle              = require('./dist/vue-ssr-server-bundle.json');
-const clientManifest            = require('./dist/vue-ssr-client-manifest.json');
+const serverBundle              = require('../dist/vue-ssr-server-bundle.json');
+const clientManifest            = require('../dist/vue-ssr-client-manifest.json');
 
 const resolve                   = file => path.resolve(__dirname, file);
-const template                  = fs.readFileSync(resolve('./src/static/index.html'), 'utf-8');
+const template                  = fs.readFileSync(resolve('../src/static/index.html'), 'utf-8');
 
 const renderer = createBundleRenderer(serverBundle, {
     runInNewContext: false, // 推荐

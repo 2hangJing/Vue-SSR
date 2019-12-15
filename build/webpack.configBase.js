@@ -36,7 +36,8 @@ module.exports= {
                         // publicPath: path.resolve(__dirname, "dist", "img"),
 
                         name: "[name].[ext]",
-                        limit: 5*1024
+                        limit: 5*1024,
+                        // esModule: false
                     }
                 }]
             },{ 

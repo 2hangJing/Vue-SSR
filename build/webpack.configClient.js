@@ -24,10 +24,9 @@ module.exports= merge(require("./webpack.configBase.js"), {
 
     output: {
         //  入口文件输出名称，对应 entry 的 key
-        //  contenthash 根据内容产生 hash 未更改的JS 复用浏览器缓存
-        filename: '[name].[contenthash].js',
+        filename: '[name].[chunkhash].js',
         //  chunk文件输出名称
-        chunkFilename: 'chunk.[name].[contenthash].js',
+        chunkFilename: 'chunk.[name].[chunkhash].js',
     },
     module: {
         rules:[
@@ -127,8 +126,7 @@ module.exports= merge(require("./webpack.configBase.js"), {
             //  删除日志写入控制台
             verbose: true
         }),
-        // 此插件在输出目录中
-        // 生成 `vue-ssr-client-manifest.json`。
+        // 此插件在输出目录中生成 `vue-ssr-client-manifest.json`。
         new VueSSRClientPlugin()
     ]
 })

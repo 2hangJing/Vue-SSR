@@ -1,7 +1,11 @@
 
-const fs                        = require("fs");
-const path                      = require('path');
-const server                    = require('express')();
+const fs                = require("fs");
+const path              = require('path');
+const express           = require('express');
 
+const server = express();
 
-module.exports = server;
+//  static img
+server.use(express.static(path.join(__dirname, '../src/static/images')));
+
+module.exports = {express, server};
