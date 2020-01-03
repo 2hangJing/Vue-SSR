@@ -58,7 +58,9 @@ let clientHotComplier = webpackHotMiddleware(clientCompiler, { reload: true });
 let clientDevComplier = webpackDevMiddleware(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     logLevel: 'error',
-    logTime: true
+    logTime: true,
+    //  在 docker 中时使用 poll 模式代替 文件监听
+    watchOptions: { poll: config.DOCKER_webpackPoll ? 1000 : false }
 });
 
 server.use(clientDevComplier);
@@ -107,7 +109,7 @@ let mfs = new MFS();
 //  将serverBundle 输出到内存中
 serverCompiler.outputFileSystem = mfs;
 //  server webpack 监听
-serverCompiler.watch({}, (err, state)=>{
+serverCompiler.watch( { watchOptions: { poll: config.DOCKER_webpackPoll ? 1000 : false } }, (err, state)=>{
     if(err){
         console.log( err );
     }else{
@@ -154,5 +156,5 @@ server.listen(config.PORT_HTTP, () => {
 
     console.log(colors.green(`> node service is running! \n> port ${ config.PORT_HTTP }`));
 
-    c.exec(`start http://localhost:${ config.PORT_HTTP }/`);
-})
+    config.autoOpen && c.exec(`start http://localhost:${ config.PORT_HTTP }/`)
+});

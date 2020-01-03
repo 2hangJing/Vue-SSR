@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>HOME</h2>
+        <h2>HOME 1321212</h2>
         <img src="../static/images/testImg (1).jpg" alt="">
     </div>
 </template>
