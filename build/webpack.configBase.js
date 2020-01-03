@@ -37,7 +37,7 @@ module.exports= {
 
                         name: "[name].[ext]",
                         limit: 5*1024,
-                        // esModule: false
+                        esModule: false
                     }
                 }]
             },{ 
